@@ -152,15 +152,7 @@ document.getElementById('run').addEventListener('click', ()=>{
   const formationEl = document.getElementById('formation');
   const idsEl = document.getElementById('ids');
   const cmd = document.getElementById('cmd');
-  
-  // Reset
-  msg.textContent = '';
-  formationEl.textContent = '';
-  idsEl.style.display = 'none';
-  idsEl.textContent = '';
-  cmd.value = '';
-  document.getElementById('cmdPVE').value = '';
-  document.getElementById('cmdFLEX').value = '';
+  msg.textContent=''; formationEl.textContent=''; idsEl.style.display='none'; idsEl.textContent=''; cmd.value='';
 
   if(!raw){ 
     msg.textContent='Please enter your team.'; 
@@ -168,7 +160,7 @@ document.getElementById('run').addEventListener('click', ()=>{
     return; 
   }
 
-  // Split into hero blocks
+  // 1. Split input into blocks
   let blocks;
   if(raw.match(/^\s*.+\| ID:/m)){
     blocks = raw.split(/(?=^.+\| ID:)/m).map(b=>b.trim()).filter(b=>b.length);
@@ -176,13 +168,13 @@ document.getElementById('run').addEventListener('click', ()=>{
     blocks = raw.split('\n').map(l=>l.trim()).filter(l=>l.length);
   }
 
-  if(blocks.length !== 6){ 
+  if(blocks.length!==6){ 
     msg.textContent='You must enter exactly 6 heroes.'; 
     msg.className='error'; 
     return; 
   }
 
-  // Parse heroes
+  // 2. Parse heroes
   const heroes = blocks.map(block=>{
     if(block.includes('ID:')){
       const idMatch = block.match(/ID:\s*(s\d+)/i);
@@ -214,11 +206,11 @@ document.getElementById('run').addEventListener('click', ()=>{
     return; 
   }
 
-  // Count roles
-  const counts = {Off:0, Def:0, Sup:0};
+  // 3. Count roles
+  const counts = {Off:0,Def:0,Sup:0}; 
   heroes.forEach(h=>{if(h.role) counts[h.role]++;});
 
-  // Find formation
+  // 4. Find formation
   const found = findFormation(counts);
   if(!found){ 
     msg.textContent='No matching formation found for this role distribution.'; 
@@ -226,7 +218,7 @@ document.getElementById('run').addEventListener('click', ()=>{
     return; 
   }
 
-  // Calculate total power + bonus
+  // 5. Team Power + Bonus
   let totalPower = heroes.reduce((sum, h) => sum + (h.power || 0), 0);
   const bonusSelect = document.getElementById('animeBonus');
   const bonusValue = parseInt(bonusSelect.value) || 0;
@@ -234,11 +226,11 @@ document.getElementById('run').addEventListener('click', ()=>{
 
   formationEl.textContent = `Formation: ${found.name} — ${found.pattern.join(', ')} (Team Power: ${totalPower})`;
 
-  // Build /multi commands
+  // 6. Build /multi commands
   const built = buildCommand(heroes, found.pattern);
   if(built.error){ 
-    msg.textContent = built.error; 
-    msg.className = 'error'; 
+    msg.textContent=built.error; 
+    msg.className='error'; 
     return; 
   }
 
@@ -252,6 +244,37 @@ document.getElementById('run').addEventListener('click', ()=>{
 
   msg.textContent='Success!';
   msg.className='success';
+});
+
+// 7. Copy-Buttons (einmalig registrieren)
+document.getElementById('copy').addEventListener('click', ()=>{
+  const cmd = document.getElementById('cmd');
+  if(!cmd.value) return;
+  navigator.clipboard.writeText(cmd.value).then(()=>{
+    const m = document.getElementById('msg'); 
+    m.textContent='Copied PVP!'; 
+    m.className='success';
+  });
+});
+
+document.getElementById('copyPVE').addEventListener('click', ()=>{
+  const cmd = document.getElementById('cmdPVE');
+  if(!cmd.value) return;
+  navigator.clipboard.writeText(cmd.value).then(()=>{
+    const m = document.getElementById('msg'); 
+    m.textContent='Copied PVE!'; 
+    m.className='success';
+  });
+});
+
+document.getElementById('copyFLEX').addEventListener('click', ()=>{
+  const cmd = document.getElementById('cmdFLEX');
+  if(!cmd.value) return;
+  navigator.clipboard.writeText(cmd.value).then(()=>{
+    const m = document.getElementById('msg'); 
+    m.textContent='Copied FLEX!'; 
+    m.className='success';
+  });
 });</script>
 </body>
 </html>
