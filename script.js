@@ -33,7 +33,10 @@ function normalizeRole(r) {
 
 function parseHero(block) {
     block = block.trim();
-    let id = "", role = "", name = "Unknown", power = 0;
+    let id = "",
+        role = "",
+        name = "Unknown",
+        power = 0;
 
     if (block.includes("ID:")) {
         const idMatch = block.match(/ID:\s*(s\d+)/i);
@@ -55,32 +58,71 @@ function parseHero(block) {
         power = /^\d+$/.test(parts[1]) ? parseInt(parts[1]) : 0;
     }
 
-    return { name, id, role, power };
+    return {
+        name,
+        id,
+        role,
+        power
+    };
 }
 
 function findFormation(counts) {
     return Object.entries(formations).find(([_, pattern]) => {
-        const roleCounts = pattern.reduce((acc, r) => { acc[r]++; return acc; }, { Off: 0, Def: 0, Sup: 0 });
+        const roleCounts = pattern.reduce((acc, r) => {
+            acc[r]++;
+            return acc;
+        }, {
+            Off: 0,
+            Def: 0,
+            Sup: 0
+        });
         return roleCounts.Off === counts.Off && roleCounts.Def === counts.Def && roleCounts.Sup === counts.Sup;
-    })?.[1] ? { name: Object.entries(formations).find(([_, pattern]) => {
-        const roleCounts = pattern.reduce((acc, r) => { acc[r]++; return acc; }, { Off: 0, Def: 0, Sup: 0 });
-        return roleCounts.Off === counts.Off && roleCounts.Def === counts.Def && roleCounts.Sup === counts.Sup;
-    })[0], pattern: Object.entries(formations).find(([_, pattern]) => {
-        const roleCounts = pattern.reduce((acc, r) => { acc[r]++; return acc; }, { Off: 0, Def: 0, Sup: 0 });
-        return roleCounts.Off === counts.Off && roleCounts.Def === counts.Def && roleCounts.Sup === counts.Sup;
-    })[1] } : null;
+    })?.[1] ? {
+        name: Object.entries(formations).find(([_, pattern]) => {
+            const roleCounts = pattern.reduce((acc, r) => {
+                acc[r]++;
+                return acc;
+            }, {
+                Off: 0,
+                Def: 0,
+                Sup: 0
+            });
+            return roleCounts.Off === counts.Off && roleCounts.Def === counts.Def && roleCounts.Sup === counts.Sup;
+        })[0],
+        pattern: Object.entries(formations).find(([_, pattern]) => {
+            const roleCounts = pattern.reduce((acc, r) => {
+                acc[r]++;
+                return acc;
+            }, {
+                Off: 0,
+                Def: 0,
+                Sup: 0
+            });
+            return roleCounts.Off === counts.Off && roleCounts.Def === counts.Def && roleCounts.Sup === counts.Sup;
+        })[1]
+    } : null;
 }
 
 function buildCommand(order, pattern) {
-    const pools = { Off: [], Def: [], Sup: [] };
-    order.forEach(h => { if (h.role && h.id) pools[h.role].push(h); });
+    const pools = {
+        Off: [],
+        Def: [],
+        Sup: []
+    };
+    order.forEach(h => {
+        if (h.role && h.id) pools[h.role].push(h);
+    });
 
     const ids = [];
     for (const role of pattern) {
-        if (!pools[role].length) return { error: `No heroes left for role ${role}` };
+        if (!pools[role].length) return {
+            error: `No heroes left for role ${role}`
+        };
         ids.push(pools[role].shift().id);
     }
-    return { ids };
+    return {
+        ids
+    };
 }
 
 function copyCommand(id, message) {
@@ -116,7 +158,14 @@ document.getElementById("run").addEventListener("click", () => {
     const heroes = blocks.map(parseHero);
     if (heroes.some(h => !h || !h.id || !h.role)) return msg.textContent = "Parsing error. Ensure each hero has an ID and a role (Off/Def/Sup).", msg.className = "error";
 
-    const counts = heroes.reduce((acc, h) => { acc[h.role]++; return acc; }, { Off: 0, Def: 0, Sup: 0 });
+    const counts = heroes.reduce((acc, h) => {
+        acc[h.role]++;
+        return acc;
+    }, {
+        Off: 0,
+        Def: 0,
+        Sup: 0
+    });
     const found = findFormation(counts);
     if (!found) return msg.textContent = "No matching formation found for this role distribution.", msg.className = "error";
 
@@ -142,7 +191,11 @@ document.getElementById("run").addEventListener("click", () => {
 
 ["copy", "copyPVE", "copyFLEX"].forEach(id => {
     document.getElementById(id).addEventListener("click", () => {
-        const map = { copy: "Copied PVP!", copyPVE: "Copied PVE!", copyFLEX: "Copied FLEX!" };
+        const map = {
+            copy: "Copied PVP!",
+            copyPVE: "Copied PVE!",
+            copyFLEX: "Copied FLEX!"
+        };
         copyCommand(id === "copy" ? "cmd" : id === "copyPVE" ? "cmdPVE" : "cmdFLEX", map[id]);
     });
 });
