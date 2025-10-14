@@ -16,7 +16,7 @@ const formations = {
     "Defense 1": ["Def", "Def", "Def", "Def", "Sup", "Sup"],
     "Defense 2": ["Def", "Def", "Def", "Def", "Off", "Off"],
     "Defense 3": ["Def", "Def", "Def", "Def", "Def", "Off"],
-    "Defense 4": ["Def", "Def", "Def", "Def", "Sup", "Sup"],
+    "Defense 4": ["Def", "Def", "Def", "Def", "Def", "Sup"],
     "Defense 5": ["Off", "Off", "Def", "Def", "Def", "Sup"],
     "Defense 6": ["Off", "Sup", "Def", "Def", "Def", "Def"],
     "Defense 7": ["Off", "Sup", "Sup", "Def", "Def", "Def"],
@@ -210,3 +210,4 @@ document.getElementById("copyFLEX").addEventListener("click", () => {
         m.className = "success";
     });
 });
+
