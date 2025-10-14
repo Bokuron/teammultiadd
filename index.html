@@ -1,225 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Team Formation Builder</title>
-    <style>
-      :root {
-        --bg: #0f172a;
-        --card: #0b1220;
-        --muted: #9aa4b2;
-        --accent: #6ee7b7;
-      }
-      * {
-        box-sizing: border-box;
-        font-family: Inter, ui-sans-serif, system-ui, Segoe UI, Roboto, Helvetica,
-          Arial;
-      }
-      body {
-        background: linear-gradient(180deg, #071029 0%, #071428 100%);
-        color: #e6eef6;
-        margin: 0;
-        padding: 24px;
-      }
-      .container {
-        max-width: 980px;
-        margin: 0 auto;
-      }
-      header {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-      }
-      h1 {
-        margin: 0;
-        font-size: 20px;
-      }
-      .card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        padding: 16px;
-        border-radius: 12px;
-        margin-top: 16px;
-      }
-      textarea {
-        width: 100%;
-        height: 160px;
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px dashed rgba(255, 255, 255, 0.04);
-        background: transparent;
-        color: inherit;
-      }
-      label {
-        font-size: 13px;
-        color: var(--muted);
-      }
-      .row {
-        display: flex;
-        gap: 8px;
-        margin-top: 12px;
-      }
-      button {
-        background: var(--accent);
-        border: none;
-        padding: 10px 12px;
-        border-radius: 8px;
-        color: #022;
-        cursor: pointer;
-      }
-      .small {
-        font-size: 13px;
-        color: var(--muted);
-      }
-      pre {
-        background: rgba(0, 0, 0, 0.3);
-        padding: 12px;
-        border-radius: 8px;
-        overflow: auto;
-      }
-      .pill {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 6px 8px;
-        border-radius: 999px;
-        font-size: 13px;
-      }
-      .out {
-        margin-top: 12px;
-      }
-      .success {
-        color: #b7f5d6;
-      }
-      .error {
-        color: #ffb4b4;
-      }
-      .copy {
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        padding: 8px;
-        border-radius: 8px;
-        color: var(--muted);
-        cursor: pointer;
-      }
-      footer {
-        margin-top: 18px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-    </style>
-  </head>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Team Formation Builder</title>
+        <style>
+            :root {
+                --bg: #0f172a;
+                --card: #0b1220;
+                --muted: #9aa4b2;
+                --accent: #6ee7b7;
+            }
+            * {
+                box-sizing: border-box;
+                font-family: Inter, ui-sans-serif, system-ui, Segoe UI, Roboto, Helvetica, Arial;
+            }
+            body {
+                background: linear-gradient(180deg, #071029 0%, #071428 100%);
+                color: #e6eef6;
+                margin: 0;
+                padding: 24px;
+            }
+            .container {
+                max-width: 980px;
+                margin: 0 auto;
+            }
+            header {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+            }
+            h1 {
+                margin: 0;
+                font-size: 20px;
+            }
+            .card {
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.04);
+                padding: 16px;
+                border-radius: 12px;
+                margin-top: 16px;
+            }
+            textarea {
+                width: 100%;
+                height: 160px;
+                padding: 12px;
+                border-radius: 8px;
+                border: 1px dashed rgba(255, 255, 255, 0.04);
+                background: transparent;
+                color: inherit;
+            }
+            label {
+                font-size: 13px;
+                color: var(--muted);
+            }
+            .row {
+                display: flex;
+                gap: 8px;
+                margin-top: 12px;
+            }
+            button {
+                background: var(--accent);
+                border: none;
+                padding: 10px 12px;
+                border-radius: 8px;
+                color: #022;
+                cursor: pointer;
+            }
+            .small {
+                font-size: 13px;
+                color: var(--muted);
+            }
+            pre {
+                background: rgba(0, 0, 0, 0.3);
+                padding: 12px;
+                border-radius: 8px;
+                overflow: auto;
+            }
+            .pill {
+                background: rgba(255, 255, 255, 0.03);
+                padding: 6px 8px;
+                border-radius: 999px;
+                font-size: 13px;
+            }
+            .out {
+                margin-top: 12px;
+            }
+            .success {
+                color: #b7f5d6;
+            }
+            .error {
+                color: #ffb4b4;
+            }
+            .copy {
+                background: transparent;
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                padding: 8px;
+                border-radius: 8px;
+                color: var(--muted);
+                cursor: pointer;
+            }
+            footer {
+                margin-top: 18px;
+                color: var(--muted);
+                font-size: 13px;
+            }
+        </style>
+    </head>
 
-  <body>
-    <div class="container">
-      <header>
-        <h1>Team Formation Builder</h1>
-        <div class="pill"></div>
-      </header>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Team Formation Builder</h1>
+                <div class="pill"></div>
+            </header>
 
-      <div class="card">
-        <label
-          >Paste your team here (one line per hero). Supported formats (tabs,
-          commas or pipes):</label
-        >
-        <textarea id="input"></textarea>
+            <div class="card">
+                <label>Paste your team here (one line per hero). Supported formats (tabs, commas or pipes):</label>
+                <textarea id="input"></textarea>
 
-        <div class="row">
-          <select id="animeBonus">
-            <option value="30">Different Animes</option>
-            <option value="48">Same Animes</option>
-            <option value="66">Synergy</option>
-          </select>
-          <button id="run">Calculate</button>
-          <div class="small">
-            Exactly 6 heroes are expected. Role detection: off / def / sup
-          </div>
+                <div class="row">
+                    <select id="animeBonus">
+                        <option value="30">Different Animes</option>
+                        <option value="48">Same Animes</option>
+                        <option value="66">Synergy</option>
+                    </select>
+                    <button id="run">Calculate</button>
+                    <div class="small">
+                        Exactly 6 heroes are expected. Role detection: off / def / sup
+                    </div>
+                </div>
+
+                <div class="out">
+                    <div id="formation" class="small"></div>
+                    <pre id="ids" style="display: none;"></pre>
+
+                    <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                        <input id="cmd" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.04); background: transparent; color: inherit;" readonly />
+                        <button id="copy" class="copy">Copy PVP</button>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                        <input id="cmdPVE" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.04); background: transparent; color: inherit;" readonly />
+                        <button id="copyPVE" class="copy">Copy PVE</button>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                        <input id="cmdFLEX" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.04); background: transparent; color: inherit;" readonly />
+                        <button id="copyFLEX" class="copy">Copy FLEX</button>
+                    </div>
+
+                    <div id="msg" class="small"></div>
+                </div>
+
+                <footer>
+                    Algorithm: Finds the formation with an exact match of role counts (e.g. Off ×4, Sup ×2) and arranges IDs in the formation order. Heroes with the same role keep their input order.
+                </footer>
+            </div>
         </div>
 
-        <div class="out">
-          <div id="formation" class="small"></div>
-          <pre id="ids" style="display: none;"></pre>
-
-          <div
-            style="
-              display: flex;
-              gap: 8px;
-              margin-top: 8px;
-              align-items: center;
-            "
-          >
-            <input
-              id="cmd"
-              style="
-                flex: 1;
-                padding: 8px;
-                border-radius: 8px;
-                border: 1px solid rgba(255, 255, 255, 0.04);
-                background: transparent;
-                color: inherit;
-              "
-              readonly
-            />
-            <button id="copy" class="copy">Copy PVP</button>
-          </div>
-
-          <div
-            style="
-              display: flex;
-              gap: 8px;
-              margin-top: 8px;
-              align-items: center;
-            "
-          >
-            <input
-              id="cmdPVE"
-              style="
-                flex: 1;
-                padding: 8px;
-                border-radius: 8px;
-                border: 1px solid rgba(255, 255, 255, 0.04);
-                background: transparent;
-                color: inherit;
-              "
-              readonly
-            />
-            <button id="copyPVE" class="copy">Copy PVE</button>
-          </div>
-
-          <div
-            style="
-              display: flex;
-              gap: 8px;
-              margin-top: 8px;
-              align-items: center;
-            "
-          >
-            <input
-              id="cmdFLEX"
-              style="
-                flex: 1;
-                padding: 8px;
-                border-radius: 8px;
-                border: 1px solid rgba(255, 255, 255, 0.04);
-                background: transparent;
-                color: inherit;
-              "
-              readonly
-            />
-            <button id="copyFLEX" class="copy">Copy FLEX</button>
-          </div>
-
-          <div id="msg" class="small"></div>
-        </div>
-
-        <footer>
-          Algorithm: Finds the formation with an exact match of role counts
-          (e.g. Off ×4, Sup ×2) and arranges IDs in the formation order. Heroes
-          with the same role keep their input order.
-        </footer>
-      </div>
-    </div>
-
-    
-    <script src="./script.js"></script>
-  </body>
+        <script src="./script.js"></script>
+    </body>
 </html>
