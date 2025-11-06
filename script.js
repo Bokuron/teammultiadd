@@ -142,13 +142,13 @@ document.getElementById("run").addEventListener("click", () => {
     const idsEl = document.getElementById("ids");
     const cmdPVP = document.getElementById("cmd");
     const cmdPVE = document.getElementById("cmdPVE");
-    const cmdFLEX = document.getElementById("cmdFLEX");
+    const cmdTOURNAMENT = document.getElementById("cmdTOURNAMENT");
 
     msg.textContent = "";
     formationEl.textContent = "";
     idsEl.style.display = "none";
     idsEl.textContent = "";
-    [cmdPVP, cmdPVE, cmdFLEX].forEach(el => el.value = "");
+    [cmdPVP, cmdPVE, cmdTOURNAMENT].forEach(el => el.value = "");
 
     if (!raw) return msg.textContent = "Please enter your team.", msg.className = "error";
 
@@ -183,20 +183,21 @@ document.getElementById("run").addEventListener("click", () => {
 
     cmdPVP.value = `/multi teamadd preset:PVP query:${ids}`;
     cmdPVE.value = `/multi teamadd preset:PVE query:${ids}`;
-    cmdFLEX.value = `/multi teamadd preset:FLEX query:${ids}`;
+    cmdFLEX.value = `/multi teamadd preset:TOURNAMENT query:${ids}`;
 
     msg.textContent = "Success!";
     msg.className = "success";
 });
 
-["copy", "copyPVE", "copyFLEX"].forEach(id => {
+["copy", "copyPVE", "copyTOURNAMENT"].forEach(id => {
     document.getElementById(id).addEventListener("click", () => {
         const map = {
             copy: "Copied PVP!",
             copyPVE: "Copied PVE!",
-            copyFLEX: "Copied FLEX!"
+            copyTOURNAMENT: "Copied TOURNAMENT!"
         };
-        copyCommand(id === "copy" ? "cmd" : id === "copyPVE" ? "cmdPVE" : "cmdFLEX", map[id]);
+        copyCommand(id === "copy" ? "cmd" : id === "copyPVE" ? "cmdPVE" : "cmdTOURNAMENT", map[id]);
     });
 });
+
 
