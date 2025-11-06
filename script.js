@@ -183,7 +183,7 @@ document.getElementById("run").addEventListener("click", () => {
 
     cmdPVP.value = `/multi teamadd preset:PVP query:${ids}`;
     cmdPVE.value = `/multi teamadd preset:PVE query:${ids}`;
-    cmdFLEX.value = `/multi teamadd preset:TOURNAMENT query:${ids}`;
+    cmdTOURNAMENT.value = `/multi teamadd preset:TOURNAMENT query:${ids}`;
 
     msg.textContent = "Success!";
     msg.className = "success";
@@ -199,5 +199,6 @@ document.getElementById("run").addEventListener("click", () => {
         copyCommand(id === "copy" ? "cmd" : id === "copyPVE" ? "cmdPVE" : "cmdTOURNAMENT", map[id]);
     });
 });
+
 
 
